@@ -7,6 +7,19 @@ using namespace std;
 // https://www.tutorialspoint.com/design_pattern/memento_pattern.htm
 // http://www.vincehuston.org/dp/memento.html
 
+void undoLastMove(Character & paladin, stack<std::shared_ptr<Memento>> & checkPoints)
+{
+	if (not checkPoints.empty())
+	{
+		paladin.restore(checkPoints.top() );
+		checkPoints.pop();
+	}
+	else
+	{
+		cout << "No checkpoints to restore character state!" << endl;
+	}
+}
+
 // main behaves like CareTaker
 int main(int /*argc*/, char *argv[])
 {
@@ -34,33 +47,17 @@ int main(int /*argc*/, char *argv[])
 	paladin.move("north-west", 90);
 	paladin.report();
 
-	if (not checkPoints.empty())
-	{
-		paladin.restore(checkPoints.top() );
-		checkPoints.pop();
-		paladin.report();
-	}
+	undoLastMove(paladin, checkPoints);
+	paladin.report();
 
-	if (not checkPoints.empty())
-	{
-		paladin.restore(checkPoints.top() );
-		checkPoints.pop();
-		paladin.report();
-	}
+	undoLastMove(paladin, checkPoints);
+	paladin.report();
 
-	if (not checkPoints.empty())
-	{
-		paladin.restore(checkPoints.top() );
-		checkPoints.pop();
-		paladin.report();
-	}
+	undoLastMove(paladin, checkPoints);
+	paladin.report();
 
-	if (not checkPoints.empty())
-	{
-		paladin.restore(checkPoints.top() );
-		checkPoints.pop();
-		paladin.report();
-	}
+	undoLastMove(paladin, checkPoints);
+	paladin.report();
 
 	return 0;
 }
