@@ -21,5 +21,5 @@ std::unique_ptr<ICustomer> CustomerFactory::getCustomer(const QString & name)
 		customer = std::make_unique<NullCustomer>("");
 	}
 
-	return std::move(customer);
+	return customer;
 }
