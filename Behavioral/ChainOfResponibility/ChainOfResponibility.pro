@@ -6,4 +6,6 @@ CONFIG -= qt
 SOURCES += main.cpp
 
 HEADERS += \
-    condiment.h
+    condiment.h \
+    sugar.h \
+    milk.h
