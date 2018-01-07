@@ -4,65 +4,50 @@
 #include <QQmlContext>
 #include <QQmlComponent>
 
+namespace
+{
+constexpr auto NEXT_ITEM_ANIMATION = true;
+constexpr auto PREVIOUS_ITEM_ANIMATION = false;
+}
+
 ViewManager::ViewManager(QObject *parent) : QObject(parent)
 {
-	engine.rootContext()->setContextProperty("viewMgr", this);
+	engine.rootContext()->setContextProperty("screenADataContext", &screenA_VM);
 
 	QQmlComponent component(&engine, "qrc:/mainStack.qml");
 	mainView = component.create();
-
-//	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
 	connect(&screenA_VM,SIGNAL(countDownFinished()), this, SLOT(goToScreenB()));
 	connect(&screenB_VM,SIGNAL(countDownFinished()), this, SLOT(goToScreenA()));
 
 	connect(&screenA_VM,SIGNAL(goToBClicked()), this, SLOT(goToScreenB()));
+	connect(&screenB_VM,SIGNAL(goToAClicked()), this, SLOT(goToScreenA()));
 
 	goToScreenA();
-}
-
-void ViewManager::onNextClicked()
-{
-	qDebug() << "ViewManager::onNextClicked()" << endl;
-
-	QVariant returnedValue;
-	QVariant msg = "qrc:/ScreenA.qml";
-	QMetaObject::invokeMethod(mainView, "myQmlFunction",
-	        Q_RETURN_ARG(QVariant, returnedValue),
-	         Q_ARG(QVariant, msg));
-
-	qDebug() << "QML function returned:" << returnedValue.toString();
-
-//	_source = "qrc:/ScreenA.qml";
-//	emit sourceChanged();
-}
-
-void ViewManager::onPrevClicked()
-{
-	qDebug() << "ViewManager::onPrevClicked()" << endl;
-	_source = "qrc:/ScreenB.qml";
-	emit sourceChanged();
 }
 
 void ViewManager::goToScreenA()
 {
 	qDebug() << "ViewManager::goToScreenA()";
-
-	engine.rootContext()->setContextProperty("vm", &screenA_VM);
-
-	_source = screenA_VM.getSource();
-	emit sourceChanged();
+	engine.rootContext()->setContextProperty("screenADataContext", &screenA_VM);
+	changeScreen("qrc:/ScreenA.qml", PREVIOUS_ITEM_ANIMATION);
 }
 
 void ViewManager::goToScreenB()
 {
 	qDebug() << "ViewManager::goToScreenB()";
+	engine.rootContext()->setContextProperty("screenBDataContext", &screenB_VM);
+	changeScreen("qrc:/ScreenB.qml", NEXT_ITEM_ANIMATION);
+}
 
-	engine.rootContext()->setContextProperty("vm", &screenB_VM);
+void ViewManager::changeScreen(const QString &screen, bool newItemAnimation)
+{
+	QVariant returnedValue;
+	QVariant newScr = screen;
+	QMetaObject::invokeMethod(mainView, "changeScreen",
+	        Q_RETURN_ARG(QVariant, returnedValue),
+	         Q_ARG(QVariant, newScr), Q_ARG(QVariant, newItemAnimation));
 
-	_source = screenB_VM.getSource();
-	emit sourceChanged();
-
-//	view.setSource(QUrl(QStringLiteral("qrc:/ScreenB.qml")));
+//	qDebug() << "QML function returned:" << returnedValue.toString();
 }
 

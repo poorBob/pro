@@ -11,9 +11,7 @@ class ScreenAViewModel : public QObject
 public:
 	explicit ScreenAViewModel(QObject *parent = nullptr);
 
-	QString getSource() const;
-
-	Q_INVOKABLE void onButtonClicked();
+	Q_INVOKABLE void onCounterButtonClicked();
 	Q_INVOKABLE void onGoToBButtonClicked();
 
 	int getClicksLeft();

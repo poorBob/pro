@@ -11,16 +11,15 @@ class ScreenBViewModel : public QObject
 public:
 	explicit ScreenBViewModel(QObject *parent = nullptr);
 
-	QString getSource() const;
-
-	Q_INVOKABLE void onButtonClicked();
-	Q_INVOKABLE void onGoToBButtonClicked();
+	Q_INVOKABLE void onCounterButtonClicked();
+	Q_INVOKABLE void onGoToAButtonClicked();
 
 	int getClicksLeft();
 
 signals:
 	void clicksLeftChanged();
 	void countDownFinished();
+	void goToAClicked();
 
 public slots:
 

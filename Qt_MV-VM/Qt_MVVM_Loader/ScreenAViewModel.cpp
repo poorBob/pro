@@ -8,19 +8,15 @@ ScreenAViewModel::ScreenAViewModel(QObject *parent) : QObject(parent)
 	connect(&_model, SIGNAL(finished()), this, SIGNAL(countDownFinished()));
 }
 
-QString ScreenAViewModel::getSource() const
+void ScreenAViewModel::onCounterButtonClicked()
 {
-	return QString("qrc:/ScreenA.qml");
-}
-
-void ScreenAViewModel::onButtonClicked()
-{
-	qDebug() << "#### ScreenAViewModel::onButtonClicked()";
+	qDebug() << "ScreenAViewModel::onCounterButtonClicked()";
 	_model.decrese();
 }
 
 void ScreenAViewModel::onGoToBButtonClicked()
 {
+	qDebug() << "ScreenAViewModel::onGoToBButtonClicked()";
 	emit goToBClicked();
 }
 

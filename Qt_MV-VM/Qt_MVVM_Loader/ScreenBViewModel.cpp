@@ -8,21 +8,16 @@ ScreenBViewModel::ScreenBViewModel(QObject *parent) : QObject(parent)
 	connect(&_model, SIGNAL(finished()), this, SIGNAL(countDownFinished()));
 }
 
-QString ScreenBViewModel::getSource() const
+void ScreenBViewModel::onCounterButtonClicked()
 {
-	return QString("qrc:/ScreenB.qml");
-}
-
-
-void ScreenBViewModel::onButtonClicked()
-{
-	qDebug() << "#### ScreenBViewModel::onButtonClicked()";
+	qDebug() << "ScreenBViewModel::onCounterButtonClicked()";
 	_model.decrese();
 }
 
-void ScreenBViewModel::onGoToBButtonClicked()
+void ScreenBViewModel::onGoToAButtonClicked()
 {
-	qDebug() << "#### ScreenBViewModel::onGoToBButtonClicked()";
+	qDebug() << "ScreenBViewModel::onGoToAButtonClicked()";
+	emit goToAClicked();
 }
 
 int ScreenBViewModel::getClicksLeft()

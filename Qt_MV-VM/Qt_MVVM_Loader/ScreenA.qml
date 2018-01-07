@@ -14,7 +14,7 @@ Rectangle {
 	Text {
 		id: txt
 		anchors.centerIn: parent
-		text: "Screen A. Action in " + vm.clickLeft + " cliks! "
+		text: "Screen A. Action in " + screenADataContext.clickLeft + " cliks! "
 	}
 
 	Button
@@ -23,10 +23,10 @@ Rectangle {
 		anchors.top: txt.bottom
 		anchors.topMargin: 10
 		anchors.horizontalCenter: parent.horizontalCenter
-		text: "Button - Click Me!"
+		text: "Counter Button - Click Me!"
 		onClicked: {
-			goToScreen("ScreenB.qml")
-			vm.onButtonClicked()
+//			goToScreen("ScreenB.qml")
+			screenADataContext.onCounterButtonClicked()
 		}
 	}
 
@@ -36,10 +36,10 @@ Rectangle {
 		anchors.left: btn.right
 		anchors.top: btn.top
 //		anchors.verticalCenter: parent.verticalCenter
-		text: "Go to B"
+		text: "Go to screen B"
 		onClicked: {
-			goToScreen("ScreenB.qml")
-			vm.onGoToBButtonClicked()
+//			goToScreen("ScreenB.qml")
+			screenADataContext.onGoToBButtonClicked()
 		}
 	}
 
