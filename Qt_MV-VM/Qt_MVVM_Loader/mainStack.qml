@@ -8,13 +8,29 @@ Window {
 	width: 480
 	height: 272
 
+	signal animationFinished()
+
 	property var nextItemAnimation: true;
-	property int  dur: 2000
+	property int  dur: 4000
 
 	function changeScreen(msg, direction) {
 		console.log("changing screen to: ", msg, direction)
 		nextItemAnimation = direction
-		stack.replace(msg/*, StackView.Immediate*/)
+		stack.replace(stack.currentItem, msg/*, StackView.Immediate*/)
+		return "Return value from changeScreen mainStack.qml method"
+	}
+
+	function goToBScreen() {
+		console.log("calling goToBScreen() function ")
+		nextItemAnimation = true
+		stack.replace(stack.currentItem, screenBComponent /*, StackView.Immediate*/)
+		return "Return value from changeScreen mainStack.qml method"
+	}
+
+	function goToComponentScreen(screenBComponent) {
+		console.log("calling goToComponentScreen() function ")
+		nextItemAnimation = true
+		stack.replace(stack.currentItem, screenBComponent /*, StackView.Immediate*/)
 		return "Return value from changeScreen mainStack.qml method"
 	}
 
@@ -35,6 +51,8 @@ Window {
 			to: 0
 			duration: dur
 			easing.type: Easing.OutCubic
+
+
 		}
 	}
 
@@ -45,6 +63,11 @@ Window {
 			to: (stack.mirrored ? -1 : 1) * -stack.width
 			duration: dur
 			easing.type: Easing.OutCubic
+		}
+
+		onRunningChanged:
+		{
+			console.log("onRunningChanged: ", running)
 		}
 	}
 
@@ -66,5 +89,21 @@ Window {
 		replaceEnter: nextItemAnimation ? nextItemEnterTransition : previousItemEnterTransition
 
 		replaceExit: nextItemAnimation ? nextItemExitTransition : previousItemExitTransition
+
+		onReplaceEnterChanged:
+		{
+			console.log("onReplaceEnterChanged: ")
+		}
+
+		onBusyChanged:
+		{
+			console.log("Busy changed: ", busy)
+			if (busy === false)
+			{
+				console.log("onStopped")
+				root.animationFinished()
+			}
+		}
+
 	}
 }

@@ -21,8 +21,14 @@ public slots:
 protected:
 	void changeScreen(const QString & screen, bool newItemAnimation);
 
+private slots:
+	void cppSlot();
+
 private:
 	QObject * mainView{nullptr};
+
+	QQmlContext * sceenBContext{nullptr};
+	QQuickItem * screenBItem{nullptr};
 
 	QQmlApplicationEngine engine;
 

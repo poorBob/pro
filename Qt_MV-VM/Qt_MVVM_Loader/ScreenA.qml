@@ -47,4 +47,9 @@ Rectangle {
 	{
 		console.log("Screen A  created!")
 	}
+
+	Component.onDestruction:
+	{
+		console.log("Screen A  deleted!")
+	}
 }

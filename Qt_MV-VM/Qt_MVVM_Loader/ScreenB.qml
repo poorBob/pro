@@ -25,7 +25,6 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		text: "Counter Button - Click Me!"
 		onClicked: {
-//			goToScreen("ScreenA.qml")
 			screenBDataContext.onCounterButtonClicked()
 		}
 	}
@@ -44,5 +43,10 @@ Rectangle {
 	Component.onCompleted:
 	{
 		console.log("Screen B  created!")
+	}
+
+	Component.onDestruction:
+	{
+		console.log("Screen B  destroyed!")
 	}
 }
