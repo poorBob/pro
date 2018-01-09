@@ -49,16 +49,16 @@ void ViewManager::goToScreenA()
 
 void ViewManager::goToScreenB()
 {
-	qDebug() << "ViewManager::goToScreenB()";
+	qDebug() << "ViewManager::goToScreenB()" << screenBItem << ", " << screenBContext;
 //	engine.rootContext()->setContextProperty("screenBDataContext", &screenB_VM);
 //	changeScreen("qrc:/ScreenB.qml", NEXT_ITEM_ANIMATION);
 
 	QQmlComponent component(&engine, "qrc:/ScreenB.qml");
 	qDebug() << component.errors();
-	sceenBContext = new QQmlContext(engine.rootContext());
-	sceenBContext->setContextProperty("screenBDataContext", &screenB_VM);
+	screenBContext = new QQmlContext(engine.rootContext());
+	screenBContext->setContextProperty("screenBDataContext", &screenB_VM);
 
-	QObject *myObject = component.create(sceenBContext);
+	QObject *myObject = component.create(screenBContext);
 	screenBItem = qobject_cast<QQuickItem*>(myObject);
 
 //	engine.rootContext()->setContextProperty("screenBComponent", item);
@@ -97,6 +97,9 @@ void ViewManager::cppSlot()
 	{
 		qDebug() << "deleting the screenBItem";
 		screenBItem->deleteLater();
+		screenBItem = nullptr;
+		screenBContext->deleteLater();
+		screenBContext = nullptr;
 	}
 }
 

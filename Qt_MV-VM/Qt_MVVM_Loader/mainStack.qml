@@ -64,11 +64,6 @@ Window {
 			duration: dur
 			easing.type: Easing.OutCubic
 		}
-
-		onRunningChanged:
-		{
-			console.log("onRunningChanged: ", running)
-		}
 	}
 
 	Transition {
@@ -78,6 +73,16 @@ Window {
 			to: (stack.mirrored ? -1 : 1) * stack.width
 			duration: dur
 			easing.type: Easing.OutCubic
+		}
+
+		onRunningChanged:
+		{
+			console.log("nextItemExitTransition  onRunningChanged: ", running)
+			if (running === false)
+			{
+				console.log("onStopped")
+				root.animationFinished()
+			}
 		}
 	}
 
@@ -98,11 +103,6 @@ Window {
 		onBusyChanged:
 		{
 			console.log("Busy changed: ", busy)
-			if (busy === false)
-			{
-				console.log("onStopped")
-				root.animationFinished()
-			}
 		}
 
 	}

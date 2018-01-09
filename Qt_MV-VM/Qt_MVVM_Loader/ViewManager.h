@@ -27,7 +27,7 @@ private slots:
 private:
 	QObject * mainView{nullptr};
 
-	QQmlContext * sceenBContext{nullptr};
+	QQmlContext * screenBContext{nullptr};
 	QQuickItem * screenBItem{nullptr};
 
 	QQmlApplicationEngine engine;
